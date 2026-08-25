@@ -29,7 +29,7 @@ class _ProdukPageState extends State<ProdukPage> {
               onTap: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProdukForm()),
+                  MaterialPageRoute(builder: (context) => ProdukForm()),
                 );
               },
             ),
@@ -44,7 +44,7 @@ class _ProdukPageState extends State<ProdukPage> {
               trailing: const Icon(Icons.logout),
               onTap: () async {
                 await LogoutBloc.logout();
-                if (!mounted) return;
+                if (!context.mounted) return;
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()));
