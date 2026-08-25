@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Campus Hunto membutuhkan lokasi Anda untuk mendeteksi posisi pada peta kampus dan memvalidasi misi.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Campus Hunto membutuhkan lokasi latar belakang untuk melacak pergerakan karakter secara real-time.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Campus Hunto membutuhkan akses kamera untuk menampilkan monster dan objek secara Augmented Reality (AR).</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
