@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'providers/game_provider.dart';
 import 'theme/app_theme.dart';
-import 'ui/home_screen.dart';
+import 'ui/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.green,
               scaffoldBackgroundColor: Colors.white,
             ),
-            home: const HomeScreen(),
+            home: const SplashScreen(),
           );
         },
       ),

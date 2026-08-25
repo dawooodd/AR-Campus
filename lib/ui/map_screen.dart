@@ -38,8 +38,23 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _onPilihTantangan() {
-    final isRealLocation = Provider.of<GameProvider>(context, listen: false).isRealLocation;
-    if (isRealLocation) {
+    final provider = Provider.of<GameProvider>(context, listen: false);
+    
+    if (provider.isGuest) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Guest hanya dapat melihat peta. Login untuk bermain!',
+            style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.orange,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    if (provider.isRealLocation) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const QrScannerScreen()),
