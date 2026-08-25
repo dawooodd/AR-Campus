@@ -40,6 +40,7 @@ dependencies:
 
   # Shared Preferences package for storing key-value data locally
   shared_preferences: ^2.0.11
+  permission_handler: ^13.0.1
 
 
 dev_dependencies:
