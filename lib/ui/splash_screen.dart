@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     color: AppColors.primaryGreen,
                     fontSize: 48.sp,
                     shadows: [
-                      Shadow(color: Colors.white, blurRadius: 10, offset: Offset(2, 2)),
+                      const Shadow(color: Colors.white, blurRadius: 10, offset: Offset(2, 2)),
                     ],
                   ),
                 ),
@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     color: AppColors.accentYellow,
                     fontSize: 48.sp,
                     shadows: [
-                      Shadow(color: Colors.black54, blurRadius: 4, offset: Offset(2, 2)),
+                      const Shadow(color: Colors.black54, blurRadius: 4, offset: Offset(2, 2)),
                     ],
                   ),
                 ),

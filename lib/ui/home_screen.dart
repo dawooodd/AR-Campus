@@ -137,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: Row(
@@ -207,7 +207,7 @@ class HomeScreen extends StatelessWidget {
           border: Border.all(color: AppColors.borderCard),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 10,
               offset: const Offset(0, 4),
             )
@@ -243,7 +243,7 @@ class HomeScreen extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, -4),
           )

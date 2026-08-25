@@ -120,8 +120,8 @@ class _MapScreenState extends State<MapScreen> {
               decoration: BoxDecoration(
                 color: AppColors.backgroundWhite,
                 borderRadius: BorderRadius.circular(16.r),
-                boxShadow: [
-                  BoxShadow(color: Colors.black12, blurRadius: 10, offset: const Offset(0, 4))
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4))
                 ],
               ),
               child: Row(
@@ -176,8 +176,8 @@ class _MapScreenState extends State<MapScreen> {
               decoration: BoxDecoration(
                 color: AppColors.backgroundWhite,
                 borderRadius: BorderRadius.circular(16.r),
-                boxShadow: [
-                  BoxShadow(color: Colors.black12, blurRadius: 10, offset: const Offset(0, 4))
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4))
                 ],
               ),
               child: Row(
@@ -189,7 +189,7 @@ class _MapScreenState extends State<MapScreen> {
                       color: Colors.orange.shade100,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    child: Center(child: Icon(Icons.pets, color: Colors.orange)),
+                    child: const Center(child: Icon(Icons.pets, color: Colors.orange)),
                   ),
                   SizedBox(width: 12.w),
                   Expanded(
@@ -220,7 +220,7 @@ class _MapScreenState extends State<MapScreen> {
                         LinearProgressIndicator(
                           value: 0.4,
                           backgroundColor: AppColors.borderCard,
-                          valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryGreen),
+                          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primaryGreen),
                           minHeight: 6.h,
                           borderRadius: BorderRadius.circular(4.r),
                         ),
@@ -281,8 +281,8 @@ class _MapScreenState extends State<MapScreen> {
       decoration: BoxDecoration(
         color: AppColors.backgroundWhite,
         borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 10, offset: const Offset(0, 4))
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4))
         ],
       ),
       child: Column(
@@ -312,7 +312,7 @@ class _MapScreenState extends State<MapScreen> {
             color: color,
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white, width: 2),
-            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4, offset: const Offset(0, 2))],
+            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2))],
           ),
           child: Icon(icon, color: Colors.white, size: 20.w),
         ),

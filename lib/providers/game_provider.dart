@@ -6,7 +6,7 @@ class GameProvider extends ChangeNotifier {
   int _totalPoints = 1250; // Starting points from the design
   bool _isRealLocation = false;
   String _userName = "Marrie";
-  int _level = 8;
+  final int _level = 8;
   
   bool get isGuest => _isGuest;
   int get totalPoints => _totalPoints;

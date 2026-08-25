@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     hintText: "Email / NIM",
                     hintStyle: GoogleFonts.inter(color: Colors.grey),
-                    prefixIcon: Icon(Icons.email_outlined, color: Colors.grey),
+                    prefixIcon: const Icon(Icons.email_outlined, color: Colors.grey),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(vertical: 16.h),
                   ),
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 16.h),
                   backgroundColor: AppColors.cardBackground,
-                  side: BorderSide(color: AppColors.outlineGreen),
+                  side: const BorderSide(color: AppColors.outlineGreen),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),

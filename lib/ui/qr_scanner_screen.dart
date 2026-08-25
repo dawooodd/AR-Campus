@@ -133,7 +133,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> with SingleTickerProv
                     Positioned.fill(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
+                          color: Colors.black.withValues(alpha: 0.5),
                         ),
                         child: Center(
                           child: Container(
@@ -142,7 +142,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> with SingleTickerProv
                             decoration: BoxDecoration(
                               color: Colors.transparent,
                               borderRadius: BorderRadius.circular(20.r),
-                              border: Border.all(color: Colors.white.withOpacity(0.5), width: 2),
+                              border: Border.all(color: Colors.white.withValues(alpha: 0.5), width: 2),
                             ),
                           ),
                         ),
@@ -172,7 +172,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> with SingleTickerProv
                               color: Colors.greenAccent,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.greenAccent.withOpacity(0.8),
+                                  color: AppColors.primaryGreen.withValues(alpha: 0.8),
                                   blurRadius: 10,
                                   spreadRadius: 2,
                                 )
