@@ -11,6 +11,14 @@ analyzer:
   errors:
     prefer_typing_uninitialized_variables: ignore
     unused_import: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 include: package:flutter_lints/flutter.yaml
 
 linter:
