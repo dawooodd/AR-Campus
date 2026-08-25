@@ -31,12 +31,12 @@ class MapScreen extends StatelessWidget {
           ),
           
           // Marker Placeholders
-          Positioned(
+          const Positioned(
             top: 200,
             left: 150,
             child: Icon(Icons.location_on, color: AppTheme.primaryGreen, size: 48),
           ),
-          Positioned(
+          const Positioned(
             top: 400,
             left: 250,
             child: Icon(Icons.location_on, color: AppTheme.textGray, size: 48),

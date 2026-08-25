@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: 24,
-                      backgroundColor: AppTheme.primaryGreen.withOpacity(0.2),
+                      backgroundColor: AppTheme.primaryGreen.withValues(alpha: 0.2),
                       child: const Icon(Icons.person, color: AppTheme.primaryGreen),
                     ),
                   ],

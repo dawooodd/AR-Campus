@@ -29,7 +29,7 @@ class _ProdukPageState extends State<ProdukPage> {
               onTap: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProdukForm()),
+                  MaterialPageRoute(builder: (context) => const ProdukForm()),
                 );
               },
             ),
@@ -43,12 +43,11 @@ class _ProdukPageState extends State<ProdukPage> {
               title: const Text('Logout'),
               trailing: const Icon(Icons.logout),
               onTap: () async {
-                await LogoutBloc.logout().then((value) => {
-                  Navigator.pushReplacement(
-
+                await LogoutBloc.logout();
+                if (!mounted) return;
+                Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()))
-                });
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
               },
             ),
           ],

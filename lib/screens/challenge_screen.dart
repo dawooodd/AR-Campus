@@ -31,7 +31,7 @@ class ChallengeScreen extends StatelessWidget {
                     return CustomCard(
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundColor: AppTheme.primaryGreen.withOpacity(0.1),
+                          backgroundColor: AppTheme.primaryGreen.withValues(alpha: 0.1),
                           child: Icon(challenge["icon"], color: AppTheme.primaryGreen),
                         ),
                         title: Text(
@@ -41,7 +41,7 @@ class ChallengeScreen extends StatelessWidget {
                         trailing: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
-                            color: Colors.amber.withOpacity(0.2),
+                            color: Colors.amber.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
