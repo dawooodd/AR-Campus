@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # HTTP package for making network requests
-  http: ^0.13.4
+  http: ^1.2.1
 
   # Shared Preferences package for storing key-value data locally
   shared_preferences: ^2.0.11
@@ -44,7 +44,7 @@ dependencies:
   provider: ^6.1.5+1
   flutter_screenutil: ^5.9.3
   mobile_scanner: ^7.4.0
-  google_fonts: ^4.0.4
+  google_fonts: ^8.2.1
 
 
 dev_dependencies:
