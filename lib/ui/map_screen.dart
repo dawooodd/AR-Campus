@@ -199,14 +199,18 @@ class _MapScreenState extends State<MapScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Progress Hari Ini",
-                              style: GoogleFonts.inter(
-                                color: AppColors.textPrimary,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
+                            Flexible(
+                              child: Text(
+                                "Progress Hari Ini",
+                                style: GoogleFonts.inter(
+                                  color: AppColors.textPrimary,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            SizedBox(width: 4.w),
                             Text(
                               "4 / 10 Lokasi",
                               style: GoogleFonts.inter(
