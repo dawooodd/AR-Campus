@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomBottomNav extends StatelessWidget {
   final int currentIndex;
-  const CustomBottomNav({super.key, required this.currentIndex});
+  final Function(int)? onTap;
+  const CustomBottomNav({super.key, required this.currentIndex, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,10 @@ class CustomBottomNav extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(Icons.home, "Home", currentIndex == 0),
-              _buildNavItem(Icons.map_outlined, "Peta", currentIndex == 1),
-              _buildNavItem(Icons.stars, "Reward", currentIndex == 2),
-              _buildNavItem(Icons.person_outline, "Profile", currentIndex == 3),
+              _buildNavItem(Icons.home, "Home", 0),
+              _buildNavItem(Icons.map_outlined, "Peta", 1),
+              _buildNavItem(Icons.stars, "Reward", 2),
+              _buildNavItem(Icons.person_outline, "Profile", 3),
             ],
           ),
         ),
@@ -40,25 +41,34 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool isSelected) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          color: isSelected ? Colors.black : Colors.black87,
-          size: 28.w,
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          label,
-          style: GoogleFonts.inter(
+  Widget _buildNavItem(IconData icon, String label, int index) {
+    bool isSelected = currentIndex == index;
+    return GestureDetector(
+      onTap: () {
+        if (onTap != null) {
+          onTap!(index);
+        }
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
             color: isSelected ? Colors.black : Colors.black87,
-            fontSize: 12.sp,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+            size: 28.w,
           ),
-        ),
-      ],
+          SizedBox(height: 4.h),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              color: isSelected ? Colors.black : Colors.black87,
+              fontSize: 12.sp,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

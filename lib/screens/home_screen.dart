@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_header.dart';
 import '../widgets/custom_card.dart';
 import '../theme/app_theme.dart';
+import 'map_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -63,6 +64,29 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 24),
                   );
                 },
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryGreen,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MapScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Mulai Eksplorasi',
+                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ],
           ),

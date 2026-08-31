@@ -3,6 +3,9 @@ import 'home_screen.dart';
 import 'map_screen.dart';
 import 'challenge_screen.dart';
 import '../theme/app_theme.dart';
+import '../ui/custom_bottom_nav.dart';
+import '../widgets/warning_dialog.dart';
+import '../helpers/user_info.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -13,6 +16,20 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
+  bool _isGuest = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkGuestStatus();
+  }
+
+  Future<void> _checkGuestStatus() async {
+    bool guest = await UserInfo().isGuest();
+    setState(() {
+      _isGuest = guest;
+    });
+  }
 
   final List<Widget> _screens = [
     const HomeScreen(),
@@ -23,6 +40,21 @@ class _MainNavigationState extends State<MainNavigation> {
     const Scaffold(body: Center(child: Text('Profile Screen', style: AppTheme.titleStyle))),
   ];
 
+  void _onNavTapped(int index) {
+    if (index == 2 && _isGuest) {
+      showDialog(
+        context: context,
+        builder: (context) => const WarningDialog(
+          description: "Fitur ini hanya untuk pengguna terdaftar",
+        ),
+      );
+      return;
+    }
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,32 +62,9 @@ class _MainNavigationState extends State<MainNavigation> {
         index: _currentIndex,
         children: _screens,
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomNav(
         currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Map',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events),
-            label: 'Tantangan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        onTap: _onNavTapped,
       ),
     );
   }
