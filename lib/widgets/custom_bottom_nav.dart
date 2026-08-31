@@ -43,31 +43,37 @@ class CustomBottomNav extends StatelessWidget {
 
   Widget _buildNavItem(IconData icon, String label, int index) {
     bool isSelected = currentIndex == index;
-    return GestureDetector(
-      onTap: () {
-        if (onTap != null) {
-          onTap!(index);
-        }
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? Colors.black : Colors.black87,
-            size: 28.w,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          if (onTap != null) {
+            onTap!(index);
+          }
+        },
+        borderRadius: BorderRadius.circular(12.r),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? Colors.black : Colors.black87,
+                size: 28.w,
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  color: isSelected ? Colors.black : Colors.black87,
+                  fontSize: 12.sp,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 4.h),
-          Text(
-            label,
-            style: GoogleFonts.inter(
-              color: isSelected ? Colors.black : Colors.black87,
-              fontSize: 12.sp,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

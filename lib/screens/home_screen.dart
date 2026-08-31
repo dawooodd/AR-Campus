@@ -220,38 +220,44 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildMenuCard(BuildContext context, {required String title, required IconData icon, required VoidCallback onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
-        decoration: BoxDecoration(
-          color: AppColors.cardBackground,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: AppColors.borderCard),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
           borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(color: AppColors.borderCard),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            )
-          ],
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: AppColors.primaryGreen, size: 28.w),
-            SizedBox(width: 16.w),
-            Text(
-              title,
-              style: GoogleFonts.inter(
-                color: AppColors.textPrimary,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w600,
-              ),
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
+            child: Row(
+              children: [
+                Icon(icon, color: AppColors.primaryGreen, size: 28.w),
+                SizedBox(width: 16.w),
+                Text(
+                  title,
+                  style: GoogleFonts.inter(
+                    color: AppColors.textPrimary,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const Spacer(),
+                Icon(Icons.chevron_right, color: AppColors.outlineGreen, size: 24.w),
+              ],
             ),
-            const Spacer(),
-            Icon(Icons.chevron_right, color: AppColors.outlineGreen, size: 24.w),
-          ],
+          ),
         ),
       ),
     );

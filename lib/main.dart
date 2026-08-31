@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'providers/game_provider.dart';
 import 'theme/app_theme.dart';
 import 'screens/splash_screen.dart';
+import 'screens/main_navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.green,
               scaffoldBackgroundColor: Colors.white,
             ),
-            home: const SplashScreen(),
+            home: const MainNavigation(),
           );
         },
       ),
