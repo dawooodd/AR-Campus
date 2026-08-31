@@ -25,4 +25,14 @@ class UserInfo {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.clear();
   }
+
+  Future setGuest(bool value) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.setBool("isGuest", value);
+  }
+
+  Future<bool> isGuest() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getBool("isGuest") ?? false;
+  }
 }

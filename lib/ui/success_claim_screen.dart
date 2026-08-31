@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
 import 'summary_screen.dart';
+import '../helpers/user_info.dart';
 
 class SuccessClaimScreen extends StatefulWidget {
   const SuccessClaimScreen({super.key});
@@ -14,16 +15,41 @@ class SuccessClaimScreen extends StatefulWidget {
 }
 
 class _SuccessClaimScreenState extends State<SuccessClaimScreen> {
+  bool _isGuest = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<GameProvider>(context, listen: false).claimPoints(100);
+    _checkGuestStatus();
+  }
+
+  Future<void> _checkGuestStatus() async {
+    bool guest = await UserInfo().isGuest();
+    setState(() {
+      _isGuest = guest;
     });
+    if (!guest) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Provider.of<GameProvider>(context, listen: false).claimPoints(100);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isGuest) {
+      return Scaffold(
+        backgroundColor: AppColors.backgroundWhite,
+        appBar: AppBar(title: const Text('Klaim Sukses')),
+        body: const Center(
+          child: Text(
+            'Fitur terkunci untuk Guest, silakan login.',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.backgroundWhite,
       body: SafeArea(

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokokita/bloc/login_bloc.dart';
 import 'package:tokokita/helpers/user_info.dart';
-import 'package:tokokita/ui/produk_page.dart';
+import 'package:tokokita/screens/main_navigation.dart';
 import 'package:tokokita/ui/registrasi_page.dart';
 import 'package:tokokita/widget/warning_dialog.dart';
 
@@ -37,6 +37,8 @@ class _LoginPageState extends State<LoginPage> {
                 _emailTextField(),
                 _passwordTextField(),
                 _buttonLogin(),
+                const SizedBox(height: 16),
+                _buttonGuestLogin(),
                 const SizedBox(height: 30),
                 _menuRegistrasi()
               ],
@@ -91,6 +93,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Membuat Tombol Guest Login
+  Widget _buttonGuestLogin() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.grey, // Warna abu-abu untuk guest
+      ),
+      child: const Text("Login as Guest"),
+      onPressed: () async {
+        await UserInfo().setGuest(true);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainNavigation()),
+        );
+      },
+    );
+  }
+
   void _submit() {
     _formKey.currentState!.save();
     setState(() {
@@ -103,9 +122,10 @@ class _LoginPageState extends State<LoginPage> {
     ).then((value) async {
       await UserInfo().setToken(value.token.toString());
       await UserInfo().setUserID(int.parse(value.userID.toString()));
+      await UserInfo().setGuest(false);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ProdukPage()),
+        MaterialPageRoute(builder: (context) => const MainNavigation()),
       );
     }, onError: (error) {
       showDialog(
