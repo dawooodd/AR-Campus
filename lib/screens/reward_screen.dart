@@ -6,9 +6,11 @@ class RewardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Hadiah')),
+      appBar: AppBar(
+        title: const Text('Klaim Hadiah'),
+      ),
       body: const Center(
-        child: Text('Halaman Hadiah / Reward', style: TextStyle(fontSize: 20)),
+        child: Text('Halaman Hadiah / Reward', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
       ),
     );
   }

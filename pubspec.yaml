@@ -47,6 +47,7 @@ dependencies:
   google_fonts: ^8.2.1
   flutter_unity_widget: ^2022.2.1
   geolocator: ^14.0.3
+  google_maps_flutter: ^2.10.0
 
 
 dev_dependencies:

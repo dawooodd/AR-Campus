@@ -6,9 +6,11 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profil')),
+      appBar: AppBar(
+        title: const Text('Profil Pengguna'),
+      ),
       body: const Center(
-        child: Text('Halaman Profil', style: TextStyle(fontSize: 20)),
+        child: Text('Halaman Profil', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
       ),
     );
   }

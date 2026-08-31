@@ -3,8 +3,6 @@ import 'home_screen.dart';
 import 'map_screen.dart';
 import 'reward_screen.dart';
 import 'profile_screen.dart';
-import 'challenge_screen.dart';
-import '../theme/app_theme.dart';
 import '../widgets/custom_bottom_nav.dart';
 import '../widgets/warning_dialog.dart';
 import '../helpers/user_info.dart';

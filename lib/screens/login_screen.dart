@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
-import 'home_screen.dart';
+import 'main_navigation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Provider.of<GameProvider>(context, listen: false).login(_identifierController.text);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MainNavigation()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Provider.of<GameProvider>(context, listen: false).login("google_user");
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const MainNavigation()),
     );
   }
 
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Provider.of<GameProvider>(context, listen: false).loginAsGuest();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const MainNavigation()),
     );
   }
 
