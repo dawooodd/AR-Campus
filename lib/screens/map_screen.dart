@@ -19,6 +19,7 @@ class _MapScreenState extends State<MapScreen> {
   UnityWidgetController? _unityWidgetController;
   bool _isOutsideCampus = false;
   bool _isGuest = false;
+  bool _isUnityLoaded = false;
 
   // Dummy coordinates for Campus (Example: Monas Jakarta)
   final double campusLat = -6.1753924;
@@ -76,6 +77,9 @@ class _MapScreenState extends State<MapScreen> {
 
   void onUnityCreated(UnityWidgetController controller) {
     _unityWidgetController = controller;
+    setState(() {
+      _isUnityLoaded = true;
+    });
     // Send mascot info to Unity
     String mascotId = _isGuest ? "Guest_Mascot" : "User_Mascot";
     _unityWidgetController?.postMessage('MascotReceiver', 'SetMascot', mascotId);
@@ -103,6 +107,19 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          // Loading Indicator for Unity Widget
+          if (!_isUnityLoaded)
+            const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(color: AppTheme.primaryGreen),
+                  SizedBox(height: 16),
+                  Text('Memuat Peta 3D...', style: AppTheme.subtitleStyle),
+                ],
+              ),
+            ),
+          
           // Unity Widget (Replacing Google Maps Placeholder)
           UnityWidget(
             onUnityCreated: onUnityCreated,
