@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:tokokita/helpers/api.dart';
-import 'package:tokokita/helpers/api_url.dart';
-import 'package:tokokita/model/registrasi.dart';
+import 'package:campus_ar/helpers/api.dart';
+import 'package:campus_ar/helpers/api_url.dart';
+import 'package:campus_ar/model/registrasi.dart';
 
 class RegistrasiBloc {
   static Future<Registrasi> registrasi({

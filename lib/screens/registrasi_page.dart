@@ -1,9 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:tokokita/bloc/registrasi_bloc.dart';
-import 'package:tokokita/widgets/success_dialog.dart';
-import 'package:tokokita/widgets/warning_dialog.dart';
+import 'package:campus_ar/bloc/registrasi_bloc.dart';
+import 'package:campus_ar/widgets/success_dialog.dart';
+import 'package:campus_ar/widgets/warning_dialog.dart';
 
 class RegistrasiPage extends StatefulWidget {
   const RegistrasiPage({super.key});

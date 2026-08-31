@@ -33,17 +33,6 @@ class _MainNavigationState extends State<MainNavigation> {
     });
   }
 
-  late final List<Widget> _screens = [
-    HomeScreen(
-      onNavigateToMap: () {
-        _onNavTapped(1);
-      },
-    ),
-    const MapScreen(),
-    const RewardScreen(),
-    const ProfileScreen(),
-  ];
-
   void _onNavTapped(int index) {
     if (index == 2 && _isGuest) {
       showDialog(
@@ -64,11 +53,22 @@ class _MainNavigationState extends State<MainNavigation> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: _screens,
+        children: [
+          HomeScreen(
+            onNavigateToMap: () {
+              _onNavTapped(1);
+            },
+          ),
+          const MapScreen(),
+          const RewardScreen(),
+          const ProfileScreen(),
+        ],
       ),
       bottomNavigationBar: CustomBottomNav(
         currentIndex: _currentIndex,
-        onTap: _onNavTapped,
+        onTap: (index) {
+          _onNavTapped(index);
+        },
       ),
     );
   }
