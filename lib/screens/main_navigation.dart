@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'map_screen.dart';
+import 'reward_screen.dart';
+import 'profile_screen.dart';
 import 'challenge_screen.dart';
 import '../theme/app_theme.dart';
-import '../ui/custom_bottom_nav.dart';
+import '../widgets/custom_bottom_nav.dart';
 import '../widgets/warning_dialog.dart';
 import '../helpers/user_info.dart';
 
@@ -31,13 +33,15 @@ class _MainNavigationState extends State<MainNavigation> {
     });
   }
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
+  late final List<Widget> _screens = [
+    HomeScreen(
+      onNavigateToMap: () {
+        _onNavTapped(1);
+      },
+    ),
     const MapScreen(),
-    // The JSON specifies Leaderboard as the 3rd tab, but we also built ChallengeScreen.
-    // For now, I'll place ChallengeScreen here as the Leaderboard/Challenge placeholder.
-    const ChallengeScreen(), 
-    const Scaffold(body: Center(child: Text('Profile Screen', style: AppTheme.titleStyle))),
+    const RewardScreen(),
+    const ProfileScreen(),
   ];
 
   void _onNavTapped(int index) {
