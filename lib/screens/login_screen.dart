@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_theme.dart';
 import 'main_navigation.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -71,47 +72,46 @@ class _LoginScreenState extends State<LoginScreen> {
               
               Text(
                 "SELAMAT DATANG",
-                style: GoogleFonts.inter(
-                  color: Colors.black,
+                style: AppTheme.heading1.copyWith(
                   fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 8.h),
               Text(
                 "Masuk untuk memulai petualangmu!",
-                style: GoogleFonts.inter(
-                  color: Colors.black87,
-                  fontSize: 14.sp,
+                style: AppTheme.body.copyWith(
+                  fontSize: 15.sp,
+                  color: AppColors.textSecondary,
                 ),
               ),
               SizedBox(height: 40.h),
               
-              // Email / NIM Field
+              // Email / NIM Field with Light Pink/Cream background (#F6EFEF)
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.cardBackground,
+                  color: AppColors.lightPinkCream,
                   borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(color: AppColors.borderCard),
+                  border: Border.all(color: AppColors.neutralGray),
                 ),
                 child: TextField(
                   controller: _identifierController,
+                  style: AppTheme.body.copyWith(fontSize: 15.sp),
                   decoration: InputDecoration(
                     hintText: "Email / NIM",
-                    hintStyle: GoogleFonts.inter(color: Colors.grey),
-                    prefixIcon: const Icon(Icons.email_outlined, color: Colors.grey),
+                    hintStyle: AppTheme.caption.copyWith(fontSize: 12.sp, color: Colors.grey.shade600),
+                    prefixIcon: const Icon(Icons.email_outlined, color: AppColors.primaryGreen),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 16.h),
+                    contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
                   ),
                 ),
               ),
               SizedBox(height: 24.h),
               
-              // Kirim OTP Button
+              // Kirim OTP Button (Heading 2, Accent Green)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.outlineGreen, // Lighter green from the design
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  backgroundColor: AppColors.accentGreen, // #96B55F
+                  padding: EdgeInsets.symmetric(vertical: 14.h),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
@@ -119,11 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: _loginAsStudent,
                 child: Text(
-                  "Kirim Kode OTP ke Email",
-                  style: GoogleFonts.inter(
+                  "Masuk",
+                  style: AppTheme.heading2.copyWith(
+                    fontSize: 20.sp,
                     color: Colors.white,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -131,12 +130,12 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 24.h),
               Row(
                 children: [
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  const Expanded(child: Divider(color: AppColors.neutralGray)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Text("atau", style: GoogleFonts.inter(color: Colors.grey)),
+                    child: Text("atau", style: AppTheme.caption.copyWith(fontSize: 12.sp)),
                   ),
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  const Expanded(child: Divider(color: AppColors.neutralGray)),
                 ],
               ),
               SizedBox(height: 24.h),
@@ -144,8 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
               // Login with Google Button
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  side: BorderSide(color: Colors.grey.shade300),
+                  padding: EdgeInsets.symmetric(vertical: 14.h),
+                  side: const BorderSide(color: AppColors.neutralGray),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
@@ -155,14 +154,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Placeholder for Google Icon (using generic icon since flutter standard doesn't have G logo)
                     Icon(Icons.g_mobiledata, color: Colors.blue, size: 28.w),
                     SizedBox(width: 8.w),
                     Text(
                       "Login with Google",
-                      style: GoogleFonts.inter(
-                        color: Colors.black87,
-                        fontSize: 16.sp,
+                      style: AppTheme.body.copyWith(
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -170,14 +167,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               
-              SizedBox(height: 40.h),
+              SizedBox(height: 24.h),
               
               // Masuk Sebagai Guest Button
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  backgroundColor: AppColors.cardBackground,
-                  side: const BorderSide(color: AppColors.outlineGreen),
+                  padding: EdgeInsets.symmetric(vertical: 14.h),
+                  backgroundColor: AppColors.softYellow,
+                  side: const BorderSide(color: AppColors.accentGreen),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
@@ -186,9 +183,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _loginAsGuest,
                 child: Text(
                   "Masuk Sebagai Guest",
-                  style: GoogleFonts.inter(
-                    color: AppColors.outlineGreen,
-                    fontSize: 16.sp,
+                  style: AppTheme.body.copyWith(
+                    color: AppColors.primaryGreen,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_theme.dart';
 import '../helpers/user_info.dart';
 import '../widgets/warning_dialog.dart';
 import 'challenge_screen.dart';
@@ -132,10 +133,9 @@ class HomeScreen extends StatelessWidget {
                         builder: (context, provider, child) {
                           return Text(
                             "Halo, ${provider.userName}!",
-                            style: GoogleFonts.inter(
+                            style: AppTheme.heading1.copyWith(
                               color: Colors.white,
                               fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
                             ),
                           );
                         },
@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                             builder: (context, provider, child) {
                               return Text(
                                 "${provider.totalPoints} Poin",
-                                style: GoogleFonts.inter(
+                                style: AppTheme.body.copyWith(
                                   color: Colors.white,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
@@ -172,7 +172,7 @@ class HomeScreen extends StatelessWidget {
                                   builder: (context, provider, child) {
                                     return Text(
                                       "Level ${provider.level}",
-                                      style: GoogleFonts.inter(
+                                      style: AppTheme.caption.copyWith(
                                         color: Colors.white,
                                         fontSize: 12.sp,
                                       ),
@@ -202,7 +202,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       child: Text(
                         "3",
-                        style: GoogleFonts.inter(
+                        style: AppTheme.caption.copyWith(
                           color: Colors.white,
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
@@ -223,9 +223,9 @@ class HomeScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: AppColors.softYellow,
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.borderCard),
+        border: Border.all(color: AppColors.neutralGray),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -247,14 +247,13 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(width: 16.w),
                 Text(
                   title,
-                  style: GoogleFonts.inter(
-                    color: AppColors.textPrimary,
+                  style: AppTheme.heading2.copyWith(
+                    color: AppColors.primaryGreen,
                     fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const Spacer(),
-                Icon(Icons.chevron_right, color: AppColors.outlineGreen, size: 24.w),
+                Icon(Icons.chevron_right, color: AppColors.accentGreen, size: 24.w),
               ],
             ),
           ),

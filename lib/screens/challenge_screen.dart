@@ -45,7 +45,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             children: [
               const CustomHeader(title: 'Pilih Tantangan'),
               if (_isGuest)
-                const Expanded(
+                Expanded(
                   child: Center(
                     child: Text(
                       'Fitur terkunci untuk Guest, silakan login.',

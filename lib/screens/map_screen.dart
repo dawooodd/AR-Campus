@@ -176,13 +176,13 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     if (!_isLocationLoaded) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(color: AppTheme.primaryGreen),
-              SizedBox(height: 16),
+              const CircularProgressIndicator(color: AppTheme.primaryGreen),
+              const SizedBox(height: 16),
               Text('Mendeteksi Lokasi GPS...', style: AppTheme.subtitleStyle),
             ],
           ),
@@ -281,12 +281,12 @@ class _MapScreenState extends State<MapScreen> {
     return Stack(
       children: [
         if (!_isUnityLoaded)
-          const Center(
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(color: AppTheme.primaryGreen),
-                SizedBox(height: 16),
+                const CircularProgressIndicator(color: AppTheme.primaryGreen),
+                const SizedBox(height: 16),
                 Text('Memuat Peta 3D Kampus...', style: AppTheme.subtitleStyle),
               ],
             ),
@@ -299,13 +299,13 @@ class _MapScreenState extends State<MapScreen> {
           fullscreen: false,
         ),
 
-        const FloatingPanel(
+        FloatingPanel(
           position: PanelPosition.top,
           child: CustomCard(
             child: Row(
               children: [
-                Icon(Icons.explore, color: AppTheme.primaryGreen),
-                SizedBox(width: 12),
+                const Icon(Icons.explore, color: AppTheme.primaryGreen),
+                const SizedBox(width: 12),
                 Text(
                   'Area Kampus - Mode AR 3D Aktif',
                   style: AppTheme.bodyStyle,

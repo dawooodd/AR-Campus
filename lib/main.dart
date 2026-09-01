@@ -27,11 +27,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Campus Hunto',
             debugShowCheckedModeBanner: false,
-            // Fallback to empty ThemeData if AppTheme.themeData fails or is missing
-            theme: ThemeData(
-              primarySwatch: Colors.green,
-              scaffoldBackgroundColor: Colors.white,
-            ),
+            theme: AppTheme.themeData,
             home: const MainNavigation(),
           );
         },
