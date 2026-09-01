@@ -40,12 +40,12 @@ dependencies:
 
   # Shared Preferences package for storing key-value data locally
   shared_preferences: ^2.0.11
-  permission_handler: ^13.0.1
+  permission_handler: ^11.3.1
   provider: ^6.1.5+1
   flutter_screenutil: ^5.9.3
   mobile_scanner: ^7.4.0
   google_fonts: ^8.2.1
-  flutter_unity_widget: ^2022.2.1
+  # flutter_unity_widget: ^2022.2.1 # Aktifkan kembali setelah export unityLibrary dari Unity Editor
   geolocator: ^14.0.3
   google_maps_flutter: ^2.10.0
   confetti: ^0.7.0
