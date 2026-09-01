@@ -12,29 +12,50 @@ class CustomBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.softYellow, // #F7FAC7 from Figma
+        color: AppColors.white, // White background from Figma specification
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24.r),
           topRight: Radius.circular(24.r),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 14,
             offset: const Offset(0, -4),
           )
         ],
       ),
       child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        child: Container(
+          height: 63.h,
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(Icons.home, "Home", 0),
-              _buildNavItem(Icons.map_outlined, "Peta", 1),
-              _buildNavItem(Icons.stars, "Reward", 2),
-              _buildNavItem(Icons.person_outline, "Profile", 3),
+              _buildNavItem(
+                activeIcon: Icons.home_rounded,
+                inactiveIcon: Icons.home_outlined,
+                label: "Home",
+                index: 0,
+              ),
+              _buildNavItem(
+                activeIcon: Icons.map_rounded,
+                inactiveIcon: Icons.map_outlined,
+                label: "Peta",
+                index: 1,
+              ),
+              _buildNavItem(
+                activeIcon: Icons.stars_rounded,
+                inactiveIcon: Icons.stars_outlined,
+                label: "Reward",
+                index: 2,
+              ),
+              _buildNavItem(
+                activeIcon: Icons.person_rounded,
+                inactiveIcon: Icons.person_outline_rounded,
+                label: "Profile",
+                index: 3,
+              ),
             ],
           ),
         ),
@@ -42,9 +63,16 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
+  Widget _buildNavItem({
+    required IconData activeIcon,
+    required IconData inactiveIcon,
+    required String label,
+    required int index,
+  }) {
     bool isSelected = currentIndex == index;
-    Color itemColor = isSelected ? AppColors.primaryGreen : AppColors.primaryGreen.withValues(alpha: 0.55);
+    Color itemColor = isSelected ? AppColors.primaryGreen : AppColors.primaryGreen.withValues(alpha: 0.45);
+    IconData icon = isSelected ? activeIcon : inactiveIcon;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -53,18 +81,19 @@ class CustomBottomNav extends StatelessWidget {
             onTap!(index);
           }
         },
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(16.r),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 icon,
                 color: itemColor,
                 size: 26.w,
               ),
-              SizedBox(height: 4.h),
+              SizedBox(height: 3.h),
               Text(
                 label,
                 style: AppTheme.navLabel.copyWith(

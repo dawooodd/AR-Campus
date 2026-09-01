@@ -56,6 +56,9 @@ class _MainNavigationState extends State<MainNavigation> {
             onNavigateToMap: () {
               _onNavTapped(1);
             },
+            onNavigateToReward: () {
+              _onNavTapped(2);
+            },
           ),
           const MapScreen(),
           const RewardScreen(),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../helpers/user_info.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import '../helpers/user_info.dart';
 import '../widgets/warning_dialog.dart';
 import 'challenge_screen.dart';
 import 'reward_screen.dart';
@@ -13,11 +12,19 @@ import 'settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback? onNavigateToMap;
-  const HomeScreen({super.key, this.onNavigateToMap});
+  final VoidCallback? onNavigateToReward;
 
-  void _checkGuestAndNavigate(BuildContext context, Widget screen) async {
+  const HomeScreen({
+    super.key,
+    this.onNavigateToMap,
+    this.onNavigateToReward,
+  });
+
+  // Check guest mode and enforce restrictions with WarningDialog
+  Future<void> _checkGuestAndExecute(BuildContext context, VoidCallback onAuthorized) async {
     bool isGuest = await UserInfo().isGuest();
     if (!context.mounted) return;
+
     if (isGuest) {
       showDialog(
         context: context,
@@ -26,234 +33,330 @@ class HomeScreen extends StatelessWidget {
         ),
       );
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+      onAuthorized();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundWhite,
-      body: Column(
-        children: [
-          _buildHeader(context),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.backgroundWhite,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.r),
-                  topRight: Radius.circular(30.r),
-                ),
-              ),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(24.w),
-                child: Column(
-                  children: [
-                    _buildMenuCard(
-                      context,
-                      title: "Mulai Game",
-                      icon: Icons.play_circle_fill,
-                      onTap: () {
-                        if (onNavigateToMap != null) {
-                          onNavigateToMap!();
-                        }
-                      },
-                    ),
-                    SizedBox(height: 16.h),
-                    _buildMenuCard(
-                      context,
-                      title: "Pencapaian",
-                      icon: Icons.emoji_events,
-                      onTap: () {
-                        _checkGuestAndNavigate(context, const ChallengeScreen());
-                      },
-                    ),
-                    SizedBox(height: 16.h),
-                    _buildMenuCard(
-                      context,
-                      title: "Hadiah",
-                      icon: Icons.card_giftcard,
-                      onTap: () {
-                        _checkGuestAndNavigate(context, const RewardScreen());
-                      },
-                    ),
-                    SizedBox(height: 16.h),
-                    _buildMenuCard(
-                      context,
-                      title: "Pengaturan",
-                      icon: Icons.settings,
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      backgroundColor: AppColors.white, // Pure white background from Figma
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // 1. Header Section (Avatar 85x82 + "Halo, user!" 24px + "Level 1" 15px)
+              _buildHeader(context),
+              SizedBox(height: 24.h),
+
+              // 2. Points Card (300x100px, #F7FAC7, "Poin Kamu" 15px, "58" 48px, Mascot 92x105px)
+              _buildPointsCard(context),
+              SizedBox(height: 32.h),
+
+              // 3. Menu Cards Section (4 items, 275x60px each, #F6EFEF)
+              _buildMenuSection(context),
+              SizedBox(height: 20.h),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
+  // Header Section with User Avatar and Level
   Widget _buildHeader(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 60.h, left: 24.w, right: 24.w, bottom: 30.h),
-      color: AppColors.primaryGreen,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 60.w,
-                    height: 60.w,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.backgroundWhite,
-                    ),
-                    child: Center(
+    return Consumer<GameProvider>(
+      builder: (context, provider, child) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // User Avatar (85x82px ellipse/circle)
+            Container(
+              width: 85.w,
+              height: 82.h,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.softYellow,
+                border: Border.all(color: AppColors.accentGreen, width: 2.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  )
+                ],
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/crocodile_mascot.jpg',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(
                       child: Icon(
-                        Icons.pets,
-                        size: 30.w,
+                        Icons.person_rounded,
+                        size: 44.w,
                         color: AppColors.primaryGreen,
                       ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(width: 18.w),
+
+            // Greeting and Level
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Halo, ${provider.userName}!",
+                    style: AppTheme.heading1.copyWith(
+                      fontSize: 24.sp,
+                      color: Colors.black, // Inter Semi Bold 24px, #000000
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(width: 16.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(height: 4.h),
+                  Row(
                     children: [
-                      Consumer<GameProvider>(
-                        builder: (context, provider, child) {
-                          return Text(
-                            "Halo, ${provider.userName}!",
-                            style: AppTheme.heading1.copyWith(
-                              color: Colors.white,
-                              fontSize: 20.sp,
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 4.h),
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: AppColors.accentYellow, size: 16.w),
-                          SizedBox(width: 4.w),
-                          Consumer<GameProvider>(
-                            builder: (context, provider, child) {
-                              return Text(
-                                "${provider.totalPoints} Poin",
-                                style: AppTheme.body.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              );
-                            },
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryGreen,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Text(
+                          "Level ${provider.level}",
+                          style: AppTheme.body.copyWith(
+                            fontSize: 13.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
                           ),
-                          SizedBox(width: 12.w),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.shield, color: Colors.white, size: 12.w),
-                                SizedBox(width: 4.w),
-                                Consumer<GameProvider>(
-                                  builder: (context, provider, child) {
-                                    return Text(
-                                      "Level ${provider.level}",
-                                      style: AppTheme.caption.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 12.sp,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
-              Stack(
-                children: [
-                  Icon(Icons.notifications_none, color: Colors.white, size: 28.w),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      padding: EdgeInsets.all(4.w),
-                      decoration: const BoxDecoration(
-                        color: AppColors.errorRed,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        "3",
-                        style: AppTheme.caption.copyWith(
-                          color: Colors.white,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildMenuCard(BuildContext context, {required String title, required IconData icon, required VoidCallback onTap}) {
+  // Centered Points Card (300x100px, Soft Yellow #F7FAC7, Mascot illustration 92x105px)
+  Widget _buildPointsCard(BuildContext context) {
+    return Consumer<GameProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          width: 300.w,
+          height: 100.h,
+          decoration: BoxDecoration(
+            color: AppColors.softYellow, // #F7FAC7
+            borderRadius: BorderRadius.circular(20.r),
+            border: Border.all(color: AppColors.neutralGray, width: 1.2),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.06),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              // Left Section: "Poin Kamu" + Score Big "58"
+              Positioned(
+                left: 20.w,
+                top: 14.h,
+                bottom: 14.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Poin Kamu",
+                      style: AppTheme.body.copyWith(
+                        fontSize: 15.sp,
+                        color: AppColors.primaryGreen,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      "${provider.totalPoints}",
+                      style: AppTheme.scoreBig.copyWith(
+                        fontSize: 44.sp,
+                        color: AppColors.primaryGreen, // #273826 Inter Bold 48px
+                        height: 1.1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Right Section: Mascot Illustration (92x105px)
+              Positioned(
+                right: 8.w,
+                bottom: -2.h,
+                child: Image.asset(
+                  'assets/images/crocodile_mascot.jpg',
+                  width: 92.w,
+                  height: 102.h,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.stars_rounded,
+                      size: 60.w,
+                      color: AppColors.accentGreen,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Menu Cards (4 items, 275x60px each, #F6EFEF background, 15r radius)
+  Widget _buildMenuSection(BuildContext context) {
+    return Column(
+      children: [
+        // Card 1: 🎮 "Mulai Game" (Play icon)
+        _buildMenuCard(
+          context,
+          title: "Mulai Game",
+          icon: Icons.sports_esports_rounded,
+          iconColor: AppColors.accentGreen,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChallengeScreen()),
+            );
+          },
+        ),
+        SizedBox(height: 16.h),
+
+        // Card 2: 🏆 "Achievement" (Trophy icon)
+        _buildMenuCard(
+          context,
+          title: "Achievement",
+          icon: Icons.emoji_events_rounded,
+          iconColor: const Color(0xFFE6A100),
+          onTap: () {
+            _checkGuestAndExecute(context, () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChallengeScreen()),
+              );
+            });
+          },
+        ),
+        SizedBox(height: 16.h),
+
+        // Card 3: 🎁 "Reward" (Gift icon)
+        _buildMenuCard(
+          context,
+          title: "Reward",
+          icon: Icons.card_giftcard_rounded,
+          iconColor: const Color(0xFFE65100),
+          onTap: () {
+            _checkGuestAndExecute(context, () {
+              if (onNavigateToReward != null) {
+                onNavigateToReward!();
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RewardScreen()),
+                );
+              }
+            });
+          },
+        ),
+        SizedBox(height: 16.h),
+
+        // Card 4: ⚙️ "Pengaturan" (Gear icon)
+        _buildMenuCard(
+          context,
+          title: "Pengaturan",
+          icon: Icons.settings_rounded,
+          iconColor: AppColors.primaryGreen,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsScreen()),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  // Single Menu Card Component (275x60px, rounded corners ~15px, background #F6EFEF)
+  Widget _buildMenuCard(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
     return Container(
-      width: double.infinity,
+      width: 275.w,
+      height: 60.h,
       decoration: BoxDecoration(
-        color: AppColors.softYellow,
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.neutralGray),
+        color: AppColors.lightPinkCream, // #F6EFEF
+        borderRadius: BorderRadius.circular(15.r), // ~15px
+        border: Border.all(color: AppColors.neutralGray, width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           )
         ],
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(15.r),
           onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Row(
               children: [
-                Icon(icon, color: AppColors.primaryGreen, size: 28.w),
-                SizedBox(width: 16.w),
-                Text(
-                  title,
-                  style: AppTheme.heading2.copyWith(
-                    color: AppColors.primaryGreen,
-                    fontSize: 18.sp,
+                // Icon (40x36px container)
+                Container(
+                  width: 40.w,
+                  height: 36.h,
+                  alignment: Alignment.center,
+                  child: Icon(icon, color: iconColor, size: 28.w),
+                ),
+                SizedBox(width: 14.w),
+
+                // Text Label (Inter Semi Bold 20px)
+                Expanded(
+                  child: Text(
+                    title,
+                    style: AppTheme.heading2.copyWith(
+                      fontSize: 18.sp,
+                      color: AppColors.primaryGreen, // #273826
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                const Spacer(),
-                Icon(Icons.chevron_right, color: AppColors.accentGreen, size: 24.w),
+
+                // Trailing chevron
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.accentGreen,
+                  size: 22.w,
+                ),
               ],
             ),
           ),
