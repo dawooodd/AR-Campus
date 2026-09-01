@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import 'success_claim_screen.dart';
+import 'success_screen.dart';
 
 class CariObjekScreen extends StatefulWidget {
   const CariObjekScreen({super.key});
@@ -251,7 +251,7 @@ class _CariObjekScreenState extends State<CariObjekScreen> with SingleTickerProv
                     Navigator.of(context).pop();
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const SuccessClaimScreen()),
+                      MaterialPageRoute(builder: (context) => const SuccessScreen()),
                     );
                   },
                   child: Text(

@@ -15,10 +15,20 @@ class GameProvider extends ChangeNotifier {
   int get level => _level;
 
   void login(String identifier) {
-    // Simulated DB Check: if email/NIM is valid, log them in as Student
     _isGuest = false;
-    _userName = "Mahasiswa"; 
-    // In a real app, we would fetch from DB here based on identifier
+    final cleanId = identifier.trim();
+    if (cleanId.toLowerCase() == "dawood" || cleanId.toLowerCase() == "skakbayu141@gmail.com") {
+      _userName = "dawood";
+    } else if (cleanId.isNotEmpty) {
+      _userName = cleanId.contains('@') ? cleanId.split('@').first : cleanId;
+    } else {
+      _userName = "dawood";
+    }
+    
+    // Ensure points are initialized for registered users
+    if (_totalPoints == 0) {
+      _totalPoints = 1250;
+    }
     notifyListeners();
   }
 

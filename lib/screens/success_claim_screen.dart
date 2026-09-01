@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'success_screen.dart';
+
+import 'package:flutter/material.dart';
 
 class SuccessClaimScreen extends StatelessWidget {
   final int pointsEarned;
@@ -22,7 +23,8 @@ class SuccessClaimScreen extends StatelessWidget {
       missionTitle: missionTitle,
       missionSubtitle: missionSubtitle,
       onContinue: onContinue,
-      autoClaimPoints: false, // Prevents duplicate claims if caller already awarded points
+      autoClaimPoints:
+          false, // Prevents duplicate claims if caller already awarded points
     );
   }
 }

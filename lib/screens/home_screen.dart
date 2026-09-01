@@ -72,35 +72,27 @@ class HomeScreen extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // User Avatar (85x82px ellipse/circle)
-            Container(
-              width: 85.w,
-              height: 82.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.softYellow,
-                border: Border.all(color: AppColors.accentGreen, width: 2.5),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  )
-                ],
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/crocodile_mascot.jpg',
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Center(
-                      child: Icon(
+            // User Avatar (circular profile picture)
+            SizedBox(
+              width: 70.w,
+              height: 70.w,
+              child: CircleAvatar(
+                radius: 35.w,
+                backgroundColor: AppColors.softYellow,
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/crocodile_mascot.jpg',
+                    width: 64.w,
+                    height: 64.w,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
                         Icons.person_rounded,
-                        size: 44.w,
+                        size: 38.w,
                         color: AppColors.primaryGreen,
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -149,13 +141,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Centered Points Card (300x100px, Soft Yellow #F7FAC7, Mascot illustration 92x105px)
+  // Centered Points Card (300x100px, Soft Yellow #F7FAC7)
   Widget _buildPointsCard(BuildContext context) {
     return Consumer<GameProvider>(
       builder: (context, provider, child) {
         return Container(
           width: 300.w,
-          height: 100.h,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
           decoration: BoxDecoration(
             color: AppColors.softYellow, // #F7FAC7
             borderRadius: BorderRadius.circular(20.r),
@@ -168,16 +160,13 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-          child: Stack(
+          child: Row(
             children: [
-              // Left Section: "Poin Kamu" + Score Big "58"
-              Positioned(
-                left: 20.w,
-                top: 14.h,
-                bottom: 14.h,
+              // Left Section: "Poin Kamu" + Score
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       "Poin Kamu",
@@ -191,30 +180,25 @@ class HomeScreen extends StatelessWidget {
                       "${provider.totalPoints}",
                       style: AppTheme.scoreBig.copyWith(
                         fontSize: 44.sp,
-                        color: AppColors.primaryGreen, // #273826 Inter Bold 48px
-                        height: 1.1,
+                        color: AppColors.primaryGreen,
+                        height: 1.15,
                       ),
                     ),
                   ],
                 ),
               ),
-
-              // Right Section: Mascot Illustration (92x105px)
-              Positioned(
-                right: 8.w,
-                bottom: -2.h,
-                child: Image.asset(
-                  'assets/images/crocodile_mascot.jpg',
-                  width: 92.w,
-                  height: 102.h,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(
-                      Icons.stars_rounded,
-                      size: 60.w,
-                      color: AppColors.accentGreen,
-                    );
-                  },
+              // Right Section: Star badge icon
+              Container(
+                width: 56.w,
+                height: 56.w,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.stars_rounded,
+                  size: 36.w,
+                  color: AppColors.accentGreen,
                 ),
               ),
             ],

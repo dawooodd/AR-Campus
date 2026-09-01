@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../helpers/user_info.dart';
 import '../theme/app_colors.dart';
 import 'login_screen.dart';
+import 'main_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,15 +24,15 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    // 3.5 seconds duration for splash screen loading
+    // 18 seconds simulated progress (strictly between 15 - 20 seconds)
     _progressController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3500),
+      duration: const Duration(seconds: 18),
     );
 
     _progressAnimation = CurvedAnimation(
       parent: _progressController,
-      curve: Curves.easeInOutQuad,
+      curve: Curves.easeInOutCubic,
     )..addListener(() {
         setState(() {});
       });
@@ -38,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     // Mascot fade-in & float-up animation
     _mascotController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 2000),
     );
 
     _mascotFadeAnimation = CurvedAnimation(
@@ -55,14 +57,35 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     ));
 
     _mascotController.forward();
+
+    // Trigger navigation strictly AFTER 100% completion
     _progressController.forward().then((_) {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
-      }
+      _handleNavigation();
     });
+  }
+
+  // Check authentication state after 100% progress and route accordingly
+  Future<void> _handleNavigation() async {
+    if (!mounted) return;
+
+    final String? token = await UserInfo().getToken();
+    final bool isGuest = await UserInfo().isGuest();
+
+    if (!mounted) return;
+
+    if (token != null && token.isNotEmpty && !isGuest) {
+      // User is already authenticated -> Navigate to MainNavigation
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainNavigation()),
+      );
+    } else {
+      // Not logged in or guest -> Navigate to LoginScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    }
   }
 
   @override
@@ -74,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    final int progressPercent = (_progressAnimation.value * 100).toInt();
+    final int progressPercent = (_progressAnimation.value * 100).clamp(0, 100).toInt();
 
     return Scaffold(
       body: Stack(
@@ -181,7 +204,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Loading Status Text
+                // Loading Status Text dynamically updating 0% -> 100%
                 Text(
                   "MEMUAT PETUALANGAN.. $progressPercent%",
                   style: GoogleFonts.inter(
@@ -217,7 +240,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     child: Stack(
                       children: [
                         FractionallySizedBox(
-                          widthFactor: _progressAnimation.value,
+                          widthFactor: _progressAnimation.value.clamp(0.0, 1.0),
                           child: Container(
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(

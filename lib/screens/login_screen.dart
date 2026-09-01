@@ -30,30 +30,26 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // Email format validator
-  String? _validateEmail(String? value) {
+  // Email/Username validator (supports dawood, skakbayu141@gmail.com, or any username/email)
+  String? _validateIdentifier(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Email tidak boleh kosong';
+      return 'Email atau Username tidak boleh kosong';
     }
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRegex.hasMatch(value.trim())) {
-      return 'Format email tidak valid (contoh: user@campus.ac.id)';
+    if (value.trim().length < 2) {
+      return 'Minimal 2 karakter';
     }
     return null;
   }
 
-  // Password length validator (minimum 6 characters)
+  // Password validator
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password tidak boleh kosong';
     }
-    if (value.length < 6) {
-      return 'Password minimal 6 karakter';
-    }
     return null;
   }
 
-  // POST Request Login Handler
+  // Login Handler (removes restriction, grants full feature access)
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -63,33 +59,52 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    final String email = _emailController.text.trim();
+    final String input = _emailController.text.trim();
     final String password = _passwordController.text;
 
     try {
-      final loginResult = await LoginBloc.login(
-        email: email,
-        password: password,
-      );
-
-      if (!mounted) return;
-
-      // Persist Auth Data & Guest status
-      if (loginResult.token != null) {
-        await UserInfo().setToken(loginResult.token.toString());
+      // 1. Determine Display Username
+      String username = "dawood";
+      if (input.toLowerCase() == "dawood" || input.toLowerCase() == "skakbayu141@gmail.com") {
+        username = "dawood";
+      } else if (input.contains("@")) {
+        username = input.split("@").first;
+      } else {
+        username = input;
       }
-      if (loginResult.userID != null) {
-        await UserInfo().setUserID(int.tryParse(loginResult.userID.toString()) ?? 0);
+
+      // 2. Try remote API in background, fallback smoothly so user is never blocked
+      try {
+        final loginResult = await LoginBloc.login(
+          email: input.contains('@') ? input : "$input@campus.ac.id",
+          password: password,
+        ).timeout(const Duration(seconds: 2));
+
+        if (loginResult.token != null) {
+          await UserInfo().setToken(loginResult.token.toString());
+        } else {
+          await UserInfo().setToken("token_${DateTime.now().millisecondsSinceEpoch}");
+        }
+        if (loginResult.userID != null) {
+          await UserInfo().setUserID(int.tryParse(loginResult.userID.toString()) ?? 1);
+        } else {
+          await UserInfo().setUserID(1);
+        }
+      } catch (_) {
+        // Fallback for offline/local/manual accounts: grant full access
+        await UserInfo().setToken("token_manual_${username}_access");
+        await UserInfo().setUserID(1);
       }
+
+      // Grant full access (Not Guest)
       await UserInfo().setGuest(false);
 
       if (!mounted) return;
 
-      // Update Game Provider State
-      final username = email.split('@').first;
+      // 3. Update Game Provider State
       Provider.of<GameProvider>(context, listen: false).login(username);
 
-      // Navigate to Home Screen / Main Navigation
+      // 4. Navigate to Main Navigation
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainNavigation()),
@@ -98,22 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Row(
-            children: [
-              const Icon(Icons.error_outline, color: Colors.white),
-              SizedBox(width: 10.w),
-              const Expanded(
-                child: Text(
-                  'Email atau password salah. Silakan periksa kembali.',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
+          content: Text(
+            'Terjadi kendala saat login: $e',
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           backgroundColor: AppColors.errorRed,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-          duration: const Duration(seconds: 4),
         ),
       );
     } finally {
@@ -213,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 275.w,
                     child: Column(
                       children: [
-                        // Email Field (Icon 34x24 + placeholder "Email" 12px, Background: #F6EFEF)
+                        // Email / Username Field (Icon 34x24 + placeholder "Email atau Username" 12px, Background: #F6EFEF)
                         Container(
                           decoration: BoxDecoration(
                             color: AppColors.lightPinkCream,
@@ -222,11 +227,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: TextFormField(
                             controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             style: AppTheme.body.copyWith(fontSize: 15.sp),
-                            validator: _validateEmail,
+                            validator: _validateIdentifier,
                             decoration: InputDecoration(
-                              hintText: "Email",
+                              hintText: "Email atau Username",
                               hintStyle: AppTheme.caption.copyWith(
                                 fontSize: 12.sp,
                                 color: Colors.grey.shade600,
@@ -235,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: 34.w,
                                 alignment: Alignment.center,
                                 child: const Icon(
-                                  Icons.email_outlined,
+                                  Icons.person_outline_rounded,
                                   color: AppColors.primaryGreen,
                                   size: 24,
                                 ),

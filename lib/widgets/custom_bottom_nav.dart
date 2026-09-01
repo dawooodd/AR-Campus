@@ -26,8 +26,9 @@ class CustomBottomNav extends StatelessWidget {
         ],
       ),
       child: SafeArea(
+        top: false,
         child: Container(
-          height: 63.h,
+          height: 56.h,
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -83,7 +84,7 @@ class CustomBottomNav extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16.r),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 4.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
