@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import 'qr_scanner_screen.dart';
+import 'ar_mission.dart';
 
 class MisiCepatScreen extends StatelessWidget {
   const MisiCepatScreen({super.key});
@@ -162,12 +162,12 @@ class MisiCepatScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const QrScannerScreen()),
+                      MaterialPageRoute(builder: (context) => const ArMissionScreen()),
                     );
                   },
-                  icon: const Icon(Icons.qr_code_scanner_rounded, color: Colors.white),
+                  icon: const Icon(Icons.view_in_ar_rounded, color: Colors.white),
                   label: Text(
-                    "Pindai QR Scanner Sekarang",
+                    "Mulai AR Camera Mission",
                     style: AppTheme.heading2.copyWith(
                       fontSize: 18.sp,
                       color: Colors.white,
