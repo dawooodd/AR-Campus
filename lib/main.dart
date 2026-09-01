@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             title: 'Campus Hunto',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.themeData,
-            home: const MainNavigation(),
+            home: const SplashScreen(),
           );
         },
       ),
