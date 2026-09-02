@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import '../widgets/warning_dialog.dart';
 import 'challenge_screen.dart';
 import 'reward_screen.dart';
 import 'settings_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback? onNavigateToMap;
@@ -72,26 +74,22 @@ class HomeScreen extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // User Avatar (circular profile picture)
-            SizedBox(
-              width: 70.w,
-              height: 70.w,
-              child: CircleAvatar(
-                radius: 35.w,
-                backgroundColor: AppColors.softYellow,
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/crocodile_mascot.jpg',
-                    width: 64.w,
-                    height: 64.w,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(
-                        Icons.person_rounded,
-                        size: 38.w,
-                        color: AppColors.primaryGreen,
-                      );
-                    },
+            // User Avatar (circular profile picture, tap to view Profile)
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                );
+              },
+              child: SizedBox(
+                width: 70.w,
+                height: 70.w,
+                child: CircleAvatar(
+                  radius: 35.w,
+                  backgroundColor: AppColors.softYellow,
+                  child: ClipOval(
+                    child: _buildAvatarImage(provider),
                   ),
                 ),
               ),
@@ -136,6 +134,46 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  Widget _buildAvatarImage(GameProvider provider) {
+    if (provider.profileImagePath != null && File(provider.profileImagePath!).existsSync()) {
+      return Image.file(
+        File(provider.profileImagePath!),
+        width: 64.w,
+        height: 64.w,
+        fit: BoxFit.cover,
+      );
+    }
+    String assetPath;
+    switch (provider.selectedCharacter.toLowerCase()) {
+      case 'tiger':
+        assetPath = 'assets/images/tiger_mascot.jpg';
+        break;
+      case 'cat':
+        assetPath = 'assets/images/cat_mascot.jpg';
+        break;
+      case 'dragon':
+        assetPath = 'assets/images/dragon_mascot.jpg';
+        break;
+      case 'crocodile':
+      default:
+        assetPath = 'assets/images/crocodile_mascot.jpg';
+        break;
+    }
+    return Image.asset(
+      assetPath,
+      width: 64.w,
+      height: 64.w,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(
+          Icons.person_rounded,
+          size: 38.w,
+          color: AppColors.primaryGreen,
         );
       },
     );

@@ -41,6 +41,7 @@ dependencies:
   # Shared Preferences package for storing key-value data locally
   shared_preferences: ^2.0.11
   permission_handler: ^11.3.1
+  image_picker: ^1.1.2
   provider: ^6.1.5+1
   flutter_screenutil: ^5.9.3
   mobile_scanner: ^7.4.0

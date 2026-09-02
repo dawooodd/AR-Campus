@@ -373,8 +373,6 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
   }
 
   Widget _buildCampusUnityAR() {
-    final mascotType = _isGuest ? "Guest Mascot (Explorer)" : "Campus Hero (Customized)";
-
     return Stack(
       children: [
         // 3D Campus AR Interactive Visualizer
@@ -454,47 +452,71 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
                   // Center 3D Mascot Object Avatar
                   Transform.translate(
                     offset: Offset(0, -10 + (val * 20)),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 110,
-                          height: 110,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF10B981), Color(0xFF047857)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppTheme.primaryGreen.withValues(alpha: 0.5),
-                                blurRadius: 25,
-                                spreadRadius: 4,
+                    child: Consumer<GameProvider>(
+                      builder: (context, gameProvider, _) {
+                        final activeChar = gameProvider.selectedCharacter;
+                        String assetPath;
+                        switch (activeChar.toLowerCase()) {
+                          case 'tiger':
+                            assetPath = 'assets/images/tiger_mascot.jpg';
+                            break;
+                          case 'cat':
+                            assetPath = 'assets/images/cat_mascot.jpg';
+                            break;
+                          case 'crocodile':
+                            assetPath = 'assets/images/crocodile_mascot.jpg';
+                            break;
+                          case 'dragon':
+                          default:
+                            assetPath = 'assets/images/dragon_mascot.jpg';
+                            break;
+                        }
+
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 110,
+                              height: 110,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: const Color(0xFF96B55F), width: 3),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppTheme.primaryGreen.withValues(alpha: 0.5),
+                                    blurRadius: 25,
+                                    spreadRadius: 4,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          child: const Icon(
-                            Icons.smart_toy_rounded,
-                            size: 60,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryGreen.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: AppTheme.primaryGreen),
-                          ),
-                          child: Text(
-                            mascotType,
-                            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
+                              child: ClipOval(
+                                child: Image.asset(
+                                  assetPath,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) => const Icon(
+                                    Icons.smart_toy_rounded,
+                                    size: 60,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF96B55F).withValues(alpha: 0.25),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: const Color(0xFF96B55F)),
+                              ),
+                              child: Text(
+                                _isGuest ? "Guest Mascot" : "$activeChar Hero",
+                                style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
 
