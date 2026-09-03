@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_colors.dart';
@@ -98,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.softYellow,
                     borderRadius: BorderRadius.circular(20.r),
-                    border: Border.all(color: AppColors.accentGreen.withOpacity(0.5)),
+                    border: Border.all(color: AppColors.accentGreen.withValues(alpha: 0.5)),
                   ),
                   child: Text(
                     'Level ${provider.level} • Penjelajah Kampus',
@@ -115,7 +116,11 @@ class ProfileScreen extends StatelessWidget {
                 _buildUserInfoSection(context, provider),
                 SizedBox(height: 28.h),
 
-                // 3. 3D Character Selector (Map Mission Avatar)
+                // 3. Interactive 3D Mascot Showcase (Hyuvi)
+                _build3DMascotShowcase(context, provider),
+                SizedBox(height: 28.h),
+
+                // 4. 3D Character Selector (Map Mission Avatar)
                 _buildCharacterSelectorSection(context, provider),
                 SizedBox(height: 30.h),
               ],
@@ -151,7 +156,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primaryGreen.withOpacity(0.12),
+                  color: AppColors.primaryGreen.withValues(alpha: 0.12),
                   blurRadius: 16.r,
                   offset: Offset(0, 6.h),
                 ),
@@ -190,7 +195,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 6.r,
                       offset: Offset(0, 2.h),
                     ),
@@ -269,7 +274,7 @@ class ProfileScreen extends StatelessWidget {
         color: const Color(0xFFF6EFEF), // Figma token #F6EFEF
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: AppColors.neutralGray.withOpacity(0.5),
+          color: AppColors.neutralGray.withValues(alpha: 0.5),
           width: 1.w,
         ),
       ),
@@ -280,7 +285,7 @@ class ProfileScreen extends StatelessWidget {
             width: 42.w,
             height: 42.w,
             decoration: BoxDecoration(
-              color: AppColors.accentGreen.withOpacity(0.18),
+              color: AppColors.accentGreen.withValues(alpha: 0.18),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Icon(
@@ -328,7 +333,185 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // 3. 3D Character Selector (Map Mission Avatar)
+  // 3. Interactive 3D Mascot Showcase (Hyuvi GLB viewer)
+  Widget _build3DMascotShowcase(BuildContext context, GameProvider provider) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Header
+        Padding(
+          padding: EdgeInsets.only(left: 4.w, bottom: 6.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.view_in_ar_rounded, color: AppColors.primaryGreen, size: 20.w),
+                  SizedBox(width: 8.w),
+                  Text(
+                    'Maskot Aktif: Hyuvi',
+                    style: GoogleFonts.inter(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryGreen,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                decoration: BoxDecoration(
+                  color: AppColors.accentGreen.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(color: AppColors.accentGreen.withValues(alpha: 0.5)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.touch_app_rounded, size: 12.w, color: AppColors.primaryGreen),
+                    SizedBox(width: 4.w),
+                    Text(
+                      '3D Interaktif',
+                      style: GoogleFonts.inter(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primaryGreen,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 4.w, bottom: 12.h),
+          child: Text(
+            'Putar, zoom, dan jelajahi maskot 3D kampus dari semua sisi.',
+            style: GoogleFonts.inter(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+
+        // 3D Viewer Card
+        Container(
+          width: double.infinity,
+          height: 240.h,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF6EFEF),
+            borderRadius: BorderRadius.circular(20.r),
+            border: Border.all(
+              color: AppColors.accentGreen.withValues(alpha: 0.5),
+              width: 1.5.w,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primaryGreen.withValues(alpha: 0.08),
+                blurRadius: 16.r,
+                offset: Offset(0, 6.h),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(19.r),
+            child: Stack(
+              children: [
+                // ModelViewer widget
+                const ModelViewer(
+                  src: 'assets/models/hyuvi.glb',
+                  alt: 'Maskot 3D Hyuvi - Campus Hunto',
+                  autoRotate: true,
+                  autoRotateDelay: 1500,
+                  rotationPerSecond: '18deg',
+                  cameraControls: true,
+                  disableZoom: false,
+                  backgroundColor: Color(0xFFF6EFEF),
+                  loading: Loading.lazy,
+                  poster: null,
+                  innerModelViewerHtml: '''
+                    <style>
+                      :host {
+                        --poster-color: #F6EFEF;
+                        --progress-bar-color: #96B55F;
+                        --progress-bar-height: 3px;
+                      }
+                    </style>
+                  ''',
+                ),
+
+                // Gradient overlay at bottom for label readability
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 48.h,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          AppColors.primaryGreen.withValues(alpha: 0.75),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(19.r),
+                        bottomRight: Radius.circular(19.r),
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Model label
+                        Row(
+                          children: [
+                            Icon(Icons.smart_toy_rounded, color: AppColors.softYellow, size: 16.w),
+                            SizedBox(width: 6.w),
+                            Text(
+                              'hyuvi.fbx → ${provider.selectedCharacter}',
+                              style: GoogleFonts.inter(
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // 3D badge
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                          decoration: BoxDecoration(
+                            color: AppColors.softYellow,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Text(
+                            'glTF 3D',
+                            style: GoogleFonts.inter(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.primaryGreen,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 4. 3D Character Selector (Map Mission Avatar)
   Widget _buildCharacterSelectorSection(BuildContext context, GameProvider provider) {
     final characters = [
       {
@@ -376,7 +559,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF96B55F).withOpacity(0.15),
+                  color: const Color(0xFF96B55F).withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Text(
@@ -440,20 +623,20 @@ class ProfileScreen extends StatelessWidget {
                     color: isSelected ? const Color(0xFFF7FAC7) : const Color(0xFFF6EFEF),
                     borderRadius: BorderRadius.circular(18.r),
                     border: Border.all(
-                      color: isSelected ? const Color(0xFF96B55F) : AppColors.neutralGray.withOpacity(0.5),
+                      color: isSelected ? const Color(0xFF96B55F) : AppColors.neutralGray.withValues(alpha: 0.5),
                       width: isSelected ? 3.5.w : 1.5.w,
                     ),
                     boxShadow: isSelected
                         ? [
                             BoxShadow(
-                              color: const Color(0xFF96B55F).withOpacity(0.35),
+                              color: const Color(0xFF96B55F).withValues(alpha: 0.35),
                               blurRadius: 10.r,
                               offset: Offset(0, 4.h),
                             )
                           ]
                         : [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 4.r,
                               offset: Offset(0, 2.h),
                             )

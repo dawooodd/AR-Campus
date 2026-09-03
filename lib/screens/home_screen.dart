@@ -11,6 +11,7 @@ import 'challenge_screen.dart';
 import 'reward_screen.dart';
 import 'settings_screen.dart';
 import 'profile_screen.dart';
+import 'leaderboard_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback? onNavigateToMap;
@@ -265,17 +266,17 @@ class HomeScreen extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
 
-        // Card 2: 🏆 "Achievement" (Trophy icon)
+        // Card 2: 🏅 "Leaderboard" (Podium/Rank icon)
         _buildMenuCard(
           context,
-          title: "Achievement",
-          icon: Icons.emoji_events_rounded,
-          iconColor: const Color(0xFFE6A100),
+          title: "Leaderboard",
+          icon: Icons.leaderboard_rounded,
+          iconColor: const Color(0xFFFFA000),
           onTap: () {
             _checkGuestAndExecute(context, () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ChallengeScreen()),
+                MaterialPageRoute(builder: (context) => const LeaderboardScreen()),
               );
             });
           },

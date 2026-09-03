@@ -3,16 +3,20 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Campus Hunto membutuhkan lokasi Anda untuk mendeteksi posisi pada peta kampus dan memvalidasi misi.</string>
+	<string>Campus Hunto membutuhkan lokasi Anda untuk mendeteksi posisi pada peta 3D kampus dan memvalidasi interaksi misi.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Campus Hunto membutuhkan akses lokasi berkelanjutan untuk menyinkronkan avatar 3D pemain dengan pergerakan di dunia nyata.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Campus Hunto membutuhkan lokasi latar belakang untuk melacak pergerakan karakter secara real-time.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Campus Hunto membutuhkan akses kamera untuk menampilkan monster dan objek secara Augmented Reality (AR).</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Campus Hunto membutuhkan sensor kompas dan gerak untuk mengarahkan orientasi avatar 3D di peta kampus.</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Tokokita</string>
+	<string>Campus Hunto</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,7 +24,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>tokokita</string>
+	<string>Campus Hunto</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

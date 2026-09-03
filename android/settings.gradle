@@ -23,3 +23,10 @@ plugins {
 }
 
 include ":app"
+
+// Conditional Unity export module binding for Unity 3D engine (unity/ar_campus)
+def unityExportDir = file("./unityLibrary")
+if (unityExportDir.exists()) {
+    include ":unityLibrary"
+    project(":unityLibrary").projectDir = unityExportDir
+}

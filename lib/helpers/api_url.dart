@@ -3,4 +3,5 @@ class ApiUrl {
 
   static const String registrasi = '$baseUrl/registrasi';
   static const String login = '$baseUrl/login';
+  static const String leaderboard = '$baseUrl/leaderboard';
 }

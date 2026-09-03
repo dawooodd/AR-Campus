@@ -157,7 +157,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
                 decoration: BoxDecoration(
                   color: const Color(0xFFF6EFEF),
                   borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(color: AppColors.neutralGray.withOpacity(0.6)),
+                  border: Border.all(color: AppColors.neutralGray.withValues(alpha: 0.6)),
                 ),
                 child: Column(
                   children: [
@@ -357,12 +357,12 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
         color: AppColors.softYellow, // #F7FAC7
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: AppColors.accentGreen.withOpacity(0.4),
+          color: AppColors.accentGreen.withValues(alpha: 0.4),
           width: 1.5.w,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryGreen.withOpacity(0.08),
+            color: AppColors.primaryGreen.withValues(alpha: 0.08),
             blurRadius: 12.r,
             offset: Offset(0, 4.h),
           ),
@@ -379,7 +379,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.06),
+                  color: Colors.black.withValues(alpha: 0.06),
                   blurRadius: 8.r,
                   offset: Offset(0, 2.h),
                 ),
@@ -450,7 +450,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
         color: const Color(0xFFF6EFEF),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: const Color(0xFF96B55F).withOpacity(0.5),
+          color: const Color(0xFF96B55F).withValues(alpha: 0.5),
           width: 1.5.w,
         ),
       ),
@@ -459,7 +459,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
           Container(
             padding: EdgeInsets.all(6.w),
             decoration: BoxDecoration(
-              color: const Color(0xFF96B55F).withOpacity(0.18),
+              color: const Color(0xFF96B55F).withValues(alpha: 0.18),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -523,16 +523,16 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
               margin: EdgeInsets.symmetric(horizontal: 4.w),
               padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 8.w),
               decoration: BoxDecoration(
-                color: isSelected ? color.withOpacity(0.08) : const Color(0xFFF6EFEF),
+                color: isSelected ? color.withValues(alpha: 0.08) : const Color(0xFFF6EFEF),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
-                  color: isSelected ? color : AppColors.neutralGray.withOpacity(0.6),
+                  color: isSelected ? color : AppColors.neutralGray.withValues(alpha: 0.6),
                   width: isSelected ? 2.5.w : 1.w,
                 ),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: color.withOpacity(0.25),
+                          color: color.withValues(alpha: 0.25),
                           blurRadius: 8.r,
                           offset: Offset(0, 3.h),
                         ),
@@ -548,7 +548,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
                         width: 44.w,
                         height: 44.w,
                         decoration: BoxDecoration(
-                          color: color.withOpacity(0.16),
+                          color: color.withValues(alpha: 0.16),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -603,7 +603,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
         color: const Color(0xFFF6EFEF), // Figma token #F6EFEF
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: AppColors.neutralGray.withOpacity(0.6),
+          color: AppColors.neutralGray.withValues(alpha: 0.6),
           width: 1.w,
         ),
       ),
@@ -680,7 +680,7 @@ class _RewardClaimScreenState extends State<RewardClaimScreen> {
           backgroundColor: const Color(0xFF96B55F), // Accent Green #96B55F
           disabledBackgroundColor: const Color(0xFFD9D9D9), // Neutral Gray
           elevation: isEnabled ? 3 : 0,
-          shadowColor: const Color(0xFF96B55F).withOpacity(0.4),
+          shadowColor: const Color(0xFF96B55F).withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(26.r), // Pill shaped
           ),
