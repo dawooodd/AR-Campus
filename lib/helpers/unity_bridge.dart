@@ -86,12 +86,28 @@ class UnityBridge {
   // FLUTTER -> UNITY MESSAGES
   // ==========================================
 
+  /// Streams real-time GPS coordinates directly to Unity PlayerController as "latitude,longitude"
+  Future<void> updateGPSPosition(double latitude, double longitude) async {
+    final gpsString = '$latitude,$longitude';
+    debugPrint('[UnityBridge -> Unity] PlayerController.UpdateGPSPosition: $gpsString');
+    if (_unityController != null) {
+      try {
+        _unityController.postMessage('PlayerController', 'UpdateGPSPosition', gpsString);
+      } catch (e) {
+        debugPrint('[UnityBridge] postMessage to PlayerController failed: $e');
+      }
+    }
+  }
+
   /// Streams real-time GPS coordinates and compass heading to Unity to update the 3D player avatar position
   Future<void> setUserLocation({
     required double latitude,
     required double longitude,
     required double heading,
   }) async {
+    // Send 1:1 GPS string to PlayerController
+    await updateGPSPosition(latitude, longitude);
+
     final payload = {
       'latitude': latitude,
       'longitude': longitude,
