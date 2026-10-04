@@ -46,7 +46,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   mobile_scanner: ^7.4.0
   google_fonts: ^8.2.1
-  flutter_unity_widget: ^2022.2.1
+  # flutter_unity_widget: ^2022.2.1 # On hold for 2D GPS Map focus
   geolocator: ^14.0.3
   google_maps_flutter: ^2.10.0
   maps_toolkit: ^3.1.0
