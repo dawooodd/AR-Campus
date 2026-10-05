@@ -16,11 +16,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class PlayerController : MonoBehaviour
 {
     [Header("=== CAMPUS GEOREFERENCE ANCHOR (ORIGIN 0,0,0) ===")]
-    [Tooltip("Campus Anchor Latitude (e.g., Main Gate) corresponding to Unity (0, 0, 0)")]
-    [SerializeField] private double anchorLatitude = -6.1753924;
+    [Tooltip("Campus Anchor Latitude (Gerbang Utama UNMER Pasuruan) corresponding to Unity (0, 0, 0)")]
+    [SerializeField] private double anchorLatitude = -7.6497574;
 
-    [Tooltip("Campus Anchor Longitude (e.g., Main Gate) corresponding to Unity (0, 0, 0)")]
-    [SerializeField] private double anchorLongitude = 106.8271528;
+    [Tooltip("Campus Anchor Longitude (Gerbang Utama UNMER Pasuruan) corresponding to Unity (0, 0, 0)")]
+    [SerializeField] private double anchorLongitude = 112.9192690;
 
     [Header("=== MOVEMENT & SMOOTHING ===")]
     [Tooltip("Interpolation speed for smooth walking transitions between GPS updates")]

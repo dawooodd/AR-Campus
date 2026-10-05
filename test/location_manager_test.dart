@@ -23,8 +23,8 @@ void main() {
     });
 
     test('Coordinates far outside campus return false', () {
-      // Monas / far coordinate (-6.1950, 106.8500) is outside
-      final isOutside = locationManager.checkCoordinatesInsideCampus(-6.1950000, 106.8500000);
+      // Coordinate far outside UNMER Pasuruan is outside
+      final isOutside = locationManager.checkCoordinatesInsideCampus(-7.7000000, 112.9500000);
       expect(isOutside, isFalse);
     });
 
@@ -49,7 +49,7 @@ void main() {
       expect(locationManager.isBuffering, isFalse);
 
       // 2. User moves outside campus (e.g., crossing boundary)
-      locationManager.simulatePosition(-6.1950000, 106.8500000);
+      locationManager.simulatePosition(-7.7000000, 112.9500000);
 
       // Anti-flicker buffer should be active immediately to prevent flickering
       expect(locationManager.isBuffering, isTrue);

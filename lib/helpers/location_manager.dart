@@ -16,19 +16,19 @@ class LocationManager extends ChangeNotifier {
   // ===========================================================================
   // CAMPUS BOUNDARY SPECIFICATION (POLYGON VERTICES)
   // ===========================================================================
-  /// Anchor Point representing Unity world origin (0, 0, 0) - Main Gate
-  static const double anchorLatitude = -6.1753924;
-  static const double anchorLongitude = 106.8271528;
-  static const String campusName = 'Campus Central Plaza';
+  /// Anchor Point representing Unity world origin (0, 0, 0) - Gerbang Utama UNMER Pasuruan
+  static const double anchorLatitude = -7.6497574;
+  static const double anchorLongitude = 112.9192690;
+  static const String campusName = 'Universitas Merdeka Pasuruan';
 
-  /// Outer boundary polygon of the campus perimeter (maps_toolkit LatLng for Raycasting)
+  /// Outer boundary polygon of the UNMER Pasuruan campus perimeter
   static const List<mp.LatLng> campusBoundary = [
-    mp.LatLng(-6.17280, 106.82480), // North-West Perimeter (Engineering Sector)
-    mp.LatLng(-6.17240, 106.82950), // North-East Perimeter (Science & Tech)
-    mp.LatLng(-6.17640, 106.83020), // East Perimeter (Main Library & Plaza)
-    mp.LatLng(-6.17820, 106.82860), // South-East Perimeter (Sports Complex)
-    mp.LatLng(-6.17850, 106.82560), // South-West Perimeter (Student Center)
-    mp.LatLng(-6.17560, 106.82420), // West Perimeter (Main Gate & Administration)
+    mp.LatLng(-7.64890, 112.91840), // North-West (Jl. Ir. H. Juanda Frontage)
+    mp.LatLng(-7.64890, 112.92020), // North-East (Batas Timur Utara)
+    mp.LatLng(-7.64980, 112.92040), // East Boundary (Fakultas & Gedung Timur)
+    mp.LatLng(-7.65080, 112.92020), // South-East (Batas Lapangan Selatan)
+    mp.LatLng(-7.65080, 112.91840), // South-West (Batas Barat Selatan)
+    mp.LatLng(-7.64980, 112.91820), // West Boundary (Batas Barat Kampus)
   ];
 
   /// Google Maps compatible LatLng list for rendering the polygon on 2D map
